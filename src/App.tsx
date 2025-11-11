@@ -1,16 +1,24 @@
-import { Outlet, useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 import { supabase } from "./lib/supabaseClient"
+import { useNavigate, Outlet } from "react-router-dom"
 import Header from "./components/Header"
 
 export default function App() {
-  const nav = useNavigate()
+  const navigate = useNavigate()
 
   useEffect(() => {
+    // verificar sessão inicial
     supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) nav("/login")
+      if (!data.session) navigate("/login", { replace: true })
     })
-  }, [nav])
+
+    // observar mudanças (login/logout)
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) navigate("/login", { replace: true })
+    })
+
+    return () => listener.subscription.unsubscribe()
+  }, [navigate])
 
   return (
     <div>

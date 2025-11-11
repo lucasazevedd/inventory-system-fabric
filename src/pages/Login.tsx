@@ -3,30 +3,45 @@ import { supabase } from "../lib/supabaseClient"
 import { useNavigate } from "react-router-dom"
 
 export default function Login() {
-  const [email, setEmail] = useState("")
-  const [sent, setSent] = useState(false)
   const nav = useNavigate()
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    const { error } = await supabase.auth.signInWithOtp({ email })
-    if (error) { alert(error.message); return }
-    setSent(true)
-    setTimeout(() => nav("/"), 6000) // após abrir o link recebido
+    setLoading(true)
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    setLoading(false)
+    if (error) return alert(error.message)
+    if (data.session) nav("/")
   }
 
   return (
     <div className="container" style={{ maxWidth: 420, marginTop: 80 }}>
       <div className="card">
         <h2 style={{ marginTop: 0 }}>Entrar</h2>
-        <p style={{ color:"var(--muted)" }}>Enviaremos um link mágico para seu e-mail.</p>
-        <form onSubmit={handleSubmit}>
-          <input className="input" placeholder="seu@email.com" value={email} onChange={e=>setEmail(e.target.value)} />
-          <div style={{ display:"flex", gap:8, marginTop:12 }}>
-            <button className="btn" type="submit">Receber link</button>
-          </div>
+        <form onSubmit={onSubmit} style={{ display: "grid", gap: 12 }}>
+          <input
+            className="input"
+            type="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            className="input"
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button className="btn" disabled={loading}>
+            {loading ? "Entrando..." : "Entrar"}
+          </button>
         </form>
-        {sent && <p className="badge" style={{ marginTop:12 }}>Verifique sua caixa de entrada.</p>}
       </div>
     </div>
   )

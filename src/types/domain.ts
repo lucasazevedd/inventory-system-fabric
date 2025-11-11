@@ -13,3 +13,15 @@ export type Product = {
 }
 
 export type ProductWithSaldo = Product & { saldo: number }
+
+export type ProductFlat = {
+  id: string
+  nome: string
+  cod: string
+  ref: string | null
+  cat: string | null
+  qtd: number
+  unidade: string
+  ativo: boolean
+  updated_at: string
+}
