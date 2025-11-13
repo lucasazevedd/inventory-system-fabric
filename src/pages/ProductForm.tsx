@@ -58,16 +58,16 @@ export default function ProductForm() {
   }
 
   return (
-    <div className="card" style={{ maxWidth: 640 }}>
+    <div className="card" style={{ maxWidth: "100%" }}>
       <h3 style={{ marginTop: 0 }}>{isEdit ? "Editar produto" : "Novo produto"}</h3>
       <form onSubmit={save} style={{ display: "grid", gap: 12 }}>
-        <input className="input" placeholder="cod (único)" value={form.cod}
+        <input className="input" placeholder="cod (único)*" value={form.cod}
                onChange={e => set("cod", e.target.value)} required />
-        <input className="input" placeholder="nome" value={form.nome}
+        <input className="input" placeholder="nome*" value={form.nome}
                onChange={e => set("nome", e.target.value)} required />
         <input className="input" placeholder="ref (fornecedor / catálogo)" value={form.ref}
                onChange={e => set("ref", e.target.value)} />
-        <input className="input" placeholder="cat (categoria)" value={form.categoria}
+        <input className="input" placeholder="cat (categoria)*" value={form.categoria}
                onChange={e => set("categoria", e.target.value)} />
         <select className="select" value={form.unidade} onChange={e => set("unidade", e.target.value)}>
           <option value="un">un</option>

@@ -7,7 +7,7 @@
   --primary: #22c55e; /* verde */
   --danger: #ef4444;
   --warning: #f59e0b;
-  --radius: 14px;
+  --radius: 20px;
   --shadow: 0 4px 24px rgba(0,0,0,.25);
 
   --font-title: "Comfortaa", system-ui, -apple-system, sans-serif;
@@ -22,5 +22,103 @@
     --text: #13151a;
     --muted: #535a67;
     --shadow: 0 4px 18px rgba(18,20,24,.08);
+  }
+}
+
+:root{
+  --bg:#0f1115; --panel:#171a21; --muted:#9aa4b2; --text:#e7edf3;
+  --brand:#4ade80; --danger:#ef4444;
+  --radius:16px; --gap:12px; --container: 100%;
+}
+
+/* container responsivo */
+.container{ width: min(var(--container), 1120px); margin-inline:auto; padding:16px; }
+
+/* cartões/botões inputs (já existiam? mantém a sua base) */
+.card{ background:var(--panel); border-radius:var(--radius); padding:16px; }
+.btn{
+  background:var(--brand);
+  color:#0b0f14;
+  border:none;
+  border-radius:20px;
+  padding:10px 14px;
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.btn.secondary{ background:#2a2f3a; color:var(--text); }
+.btn-label{ font-size:.9rem; font-weight:600; }
+.input,.select{ background:#0f131a; color:var(--text); border:1px solid #202532; border-radius:10px; padding:10px 12px; }
+.select {text-transform: uppercase;}
+
+/* tabela */
+.table{ width:100%; border-collapse:separate; border-spacing:0 8px; }
+.table th{ text-align:left; font-size:.85rem; color:var(--muted); font-weight:600; }
+.table td{ padding:10px 8px; }
+
+/* bottom bar fixo */
+.bottom-bar{
+  position:fixed; left:0; right:0; bottom:0;
+  background:#10131aee; backdrop-filter:saturate(140%) blur(8px);
+  border-top:1px solid #222a35; z-index:50;
+}
+.bottom-bar .nav-actions{
+  width:100%;
+}
+
+/* nav compartilhada */
+.desktop-header{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 14px;
+  background:#10131acc;
+  border:1px solid #222a35;
+  border-radius:999px;
+  box-shadow:0 18px 32px rgba(5,8,12,.45);
+}
+.nav-actions .btn{
+  min-height:44px;
+}
+.nav-actions--compact .btn{
+  flex:1;
+  padding:10px 8px;
+}
+.nav-actions--compact .btn .btn-label{
+  display:none;
+}
+.nav-actions--wide{
+  justify-content:flex-end;
+}
+.nav-actions .material-symbols-outlined{
+  font-size:20px;
+}
+
+/* helpers responsivos */
+.bottom-safe{ padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+.top-safe{ padding-top: max(12px, env(safe-area-inset-top)); }
+
+
+/* telas maiores */
+@media (max-width: 767px){
+  .desktop-only{ display:none !important; }
+}
+
+@media (min-width: 768px){
+  :root{ --container: 1080px; }
+  .mobile-only{ display:none !important; }
+  .desktop-header{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
   }
 }

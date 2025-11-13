@@ -2,23 +2,18 @@ import { Link, useLocation, useNavigate } from "react-router-dom"
 import { supabase } from "../lib/supabaseClient"
 import { navItems } from "../constants/navItems"
 
-export default function Header(){
+export default function BottomBar(){
   const { pathname } = useLocation()
   const nav = useNavigate()
 
   async function logout(){
     await supabase.auth.signOut()
-    nav("/login", { replace: true })
+    nav("/login", { replace:true })
   }
 
   return (
-    <header className="container top-safe desktop-header desktop-only" style={{ paddingBottom: 8 }}>
-      <div style={{ textAlign: "center" }}>
-        <Link to="/" style={{ color: "var(--text)", textDecoration: "none" }}>
-          <h1 style={{ margin: 0, fontSize: 20, letterSpacing: .2 }}>Inventory PWA</h1>
-        </Link>
-      </div>
-      <nav className="nav-actions nav-actions--wide">
+    <div className="bottom-bar mobile-only">
+      <div className="nav-actions nav-actions--compact bottom-safe container">
         {navItems.map(item => {
           const isActive = item.path ? pathname.startsWith(item.path) : false
           const className = `btn ${item.action ? "secondary" : isActive ? "" : "secondary"}`
@@ -33,8 +28,7 @@ export default function Header(){
                 aria-label={item.ariaLabel}
                 title={item.ariaLabel}
               >
-                <span className="material-symbols-outlined" aria-hidden>{item.icon}</span>
-                <span className="btn-label">{item.label}</span>
+                <span className="material-symbols-outlined">{item.icon}</span>
               </button>
             )
           }
@@ -47,12 +41,11 @@ export default function Header(){
               aria-label={item.ariaLabel}
               title={item.ariaLabel}
             >
-              <span className="material-symbols-outlined" aria-hidden>{item.icon}</span>
-              <span className="btn-label">{item.label}</span>
+              <span className="material-symbols-outlined">{item.icon}</span>
             </Link>
           )
         })}
-      </nav>
-    </header>
+      </div>
+    </div>
   )
 }
