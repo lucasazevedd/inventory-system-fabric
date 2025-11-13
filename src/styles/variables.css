@@ -37,7 +37,6 @@
 /* cartões/botões inputs (já existiam? mantém a sua base) */
 .card{ background:var(--panel); border-radius:var(--radius); padding:16px; }
 .btn{
-  background:var(--brand);
   color:#0b0f14;
   border:none;
   border-radius:20px;
@@ -48,8 +47,8 @@
   justify-content:center;
   gap:6px;
 }
-.btn.secondary{ background:#2a2f3a; color:var(--text); }
-.btn-label{ font-size:.9rem; font-weight:600; }
+.btn.secondary{ color:var(--text); background-color: var(--surface-2);}
+.btn-label{ font-size:.9rem; font-weight:600; color: white;}
 .input,.select{ background:#0f131a; color:var(--text); border:1px solid #202532; border-radius:10px; padding:10px 12px; }
 .select {text-transform: uppercase;}
 
@@ -61,11 +60,27 @@
 /* bottom bar fixo */
 .bottom-bar{
   position:fixed; left:0; right:0; bottom:0;
-  background:#10131aee; backdrop-filter:saturate(140%) blur(8px);
-  border-top:1px solid #222a35; z-index:50;
+  backdrop-filter:saturate(140%) blur(8px);
+  /* border-top:1px solid #222a35; z-index:50; */
+  margin: 20px;
 }
 .bottom-bar .nav-actions{
   width:100%;
+}
+
+.brand-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 18px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.06);
+  background:rgba(16,19,26,.85);
+  box-shadow:0 18px 32px rgba(5,8,12,.35);
+  font-family:var(--font-title);
+  font-size:1rem;
+  letter-spacing:.2px;
+  color:var(--text);
 }
 
 /* nav compartilhada */
@@ -99,6 +114,23 @@
 }
 .nav-actions .material-symbols-outlined{
   font-size:20px;
+}
+.nav-btn{
+  background:transparent;
+  color:var(--muted);
+  border:1px solid transparent;
+}
+.nav-btn--ghost{
+  color:var(--text);
+}
+.nav-btn--primary,
+.nav-btn--danger{
+  background:transparent;
+  color:var(--text);
+}
+.nav-btn--active{
+  /* background:rgba(255,255,255,.08); */
+  color:var(--text);
 }
 
 /* helpers responsivos */

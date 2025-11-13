@@ -7,13 +7,25 @@ import BottomBar from "./components/BottomBar"
 export default function App(){
   const nav = useNavigate()
   useEffect(()=>{
-    supabase.auth.getSession().then(({data})=>{
-      if(!data.session) nav("/login",{replace:true})
-    })
+    let isMounted = true
+    async function ensureSession(){
+      const { data, error } = await supabase.auth.getSession()
+      // mexa aqui se o app continuar deslogando sozinho:
+      // ajuste esta verificação para tratar tokens expirados ou múltiplas abas.
+      if(error){
+        console.warn("Falha ao recuperar sessão atual:", error.message)
+        return
+      }
+      if(isMounted && !data.session) nav("/login",{replace:true})
+    }
+    ensureSession()
     const { data: sub } = supabase.auth.onAuthStateChange((_evt, sess)=>{
       if(!sess) nav("/login",{replace:true})
     })
-    return ()=> sub?.subscription?.unsubscribe()
+    return ()=>{
+      isMounted = false
+      sub?.subscription?.unsubscribe()
+    }
   },[nav])
 
   return (

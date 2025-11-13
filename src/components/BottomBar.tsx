@@ -5,6 +5,16 @@ import { navItems } from "../constants/navItems"
 export default function BottomBar(){
   const { pathname } = useLocation()
   const nav = useNavigate()
+  const showBackButton = pathname !== "/"
+
+  function buildNavClass(variant: "primary"|"danger"|"ghost"|undefined, isActive: boolean){
+    const classes = ["btn", "nav-btn"]
+    if (variant === "primary") classes.push("nav-btn--primary")
+    if (variant === "danger") classes.push("nav-btn--danger")
+    if (variant === "ghost") classes.push("nav-btn--ghost")
+    if (isActive) classes.push("nav-btn--active")
+    return classes.join(" ")
+  }
 
   async function logout(){
     await supabase.auth.signOut()
@@ -14,9 +24,20 @@ export default function BottomBar(){
   return (
     <div className="bottom-bar mobile-only">
       <div className="nav-actions nav-actions--compact bottom-safe container">
+        {showBackButton && (
+          <button
+            type="button"
+            className="btn nav-btn nav-btn--ghost"
+            onClick={()=> nav("/")}
+            aria-label="Voltar"
+            title="Voltar"
+          >
+            <span className="material-symbols-outlined">arrow_back</span>
+          </button>
+        )}
         {navItems.map(item => {
-          const isActive = item.path ? pathname.startsWith(item.path) : false
-          const className = `btn ${item.action ? "secondary" : isActive ? "" : "secondary"}`
+          const isActive = item.path ? pathname === item.path || pathname.startsWith(`${item.path}/`) : false
+          const className = buildNavClass(item.variant, isActive)
 
           if (item.action === "logout") {
             return (

@@ -4,6 +4,7 @@ import Login from "./pages/Login"
 import ProductsList from "./pages/ProductsList"
 import ProductForm from "./pages/ProductForm"
 import MovementForm from "./pages/MovementForm"
+import MovementsHistory from "./pages/MovementsHistory"
 
 export const router = createBrowserRouter([
   { path: "/login", element: <Login /> },
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
       { path: "produtos/novo", element: <ProductForm /> },
       { path: "produtos/:id/editar", element: <ProductForm /> },
       { path: "movimentar", element: <MovementForm /> },
+      { path: "movimentacoes", element: <MovementsHistory /> },
       { path: "*", element: <Navigate to="/" /> }
     ]
   }
