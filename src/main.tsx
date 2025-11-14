@@ -7,11 +7,11 @@ import "./styles/global.css"
 
 registerSW({
   immediate: true,
-  onRegistered(reg){
+  onRegistered(reg: ServiceWorkerRegistration | undefined){
     // eslint-disable-next-line no-console
     console.log("Service Worker registrado", reg)
   },
-  onRegisterError(error){
+  onRegisterError(error: Error){
     console.error("Falha ao registrar o Service Worker:", error)
   }
 })
